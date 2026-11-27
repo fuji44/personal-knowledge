@@ -1,0 +1,39 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__plugin_personal-knowledge_basic-memory__bm_write|mcp__plugin_personal-knowledge_basic-memory__bm_edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/frontmatter_guard.py\" claude-code pre",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__plugin_personal-knowledge_basic-memory__bm_write|mcp__plugin_personal-knowledge_basic-memory__bm_edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/frontmatter_guard.py\" claude-code post",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/capture_nudge.py\" claude-code",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

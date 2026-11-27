@@ -1,0 +1,18 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "personal-knowledge",
+  "displayName": "Personal Knowledge (Basic Memory)",
+  "version": "1.6.0",
+  "description": "Personal knowledge management for AI agents over Basic Memory MCP, with project-scoped rules, lifecycle skills, and frontmatter guard hooks.",
+  "logo": "assets/logo.svg",
+  "author": {
+    "name": "fuji44",
+    "url": "https://github.com/fuji44/personal-knowledge"
+  },
+  "repository": "https://github.com/fuji44/personal-knowledge",
+  "suggestedPrompts": [
+    "List available Basic Memory projects and recent notes",
+    "Search my knowledge base for notes on the current topic",
+    "Save a structured note summarizing our design decisions to Basic Memory"
+  ]
+}

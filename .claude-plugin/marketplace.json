@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "personal-knowledge",
+  "version": "1.6.0",
+  "description": "Personal knowledge base plugin marketplace for Basic Memory MCP",
+  "owner": {
+    "name": "fuji44"
+  },
+  "plugins": [
+    {
+      "name": "personal-knowledge",
+      "source": "./plugins/personal-knowledge",
+      "description": "Personal knowledge management for AI agents over Basic Memory MCP, with project-scoped rules, lifecycle skills, and frontmatter guard hooks.",
+      "version": "1.6.0"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+services:
+  basic-memory:
+    build: .
+    # To use the prebuilt GHCR image instead of building locally, comment out `build: .` and uncomment `image:`:
+    # image: ghcr.io/fuji44/personal-knowledge:latest
+    container_name: basic-memory
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "127.0.0.1:${HOST_PORT:-48000}:8000"
+    volumes:
+      - basic-memory-data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  basic-memory-data:

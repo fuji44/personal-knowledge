@@ -1,0 +1,4 @@
+*
+!scripts/backup.sh
+!scripts/restore.sh
+!scripts/verify-backup.sh

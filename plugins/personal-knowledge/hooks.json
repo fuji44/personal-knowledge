@@ -1,0 +1,27 @@
+{
+  "capture-nudge": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 ./scripts/capture_nudge.py antigravity || true",
+        "timeout": 10
+      }
+    ]
+  },
+  "frontmatter-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "call_mcp_tool|mcp_.*basic-memory_+bm_(write|edit)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ./scripts/frontmatter_guard.py antigravity pre || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

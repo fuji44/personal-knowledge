@@ -1,0 +1,11 @@
+{
+  "name": "personal-knowledge",
+  "version": "1.6.0",
+  "description": "Personal knowledge management for AI agents over Basic Memory MCP, with project-scoped rules, lifecycle skills, and frontmatter guard hooks.",
+  "author": {
+    "name": "fuji44",
+    "url": "https://github.com/fuji44/personal-knowledge"
+  },
+  "repository": "https://github.com/fuji44/personal-knowledge",
+  "mcpServers": "./.mcp.json"
+}

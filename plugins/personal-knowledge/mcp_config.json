@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "basic-memory": {
+      "serverUrl": "http://localhost:48000/mcp"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "type": [
+    "schema",
+    "index",
+    "reflection",
+    "log",
+    "source",
+    "decision",
+    "practice",
+    "entity",
+    "concept"
+  ],
+  "status": {
+    "concept": ["tentative", "established"],
+    "entity": ["tentative", "established"],
+    "practice": ["candidate", "adopted", "retired"],
+    "decision": ["accepted", "superseded"]
+  },
+  "originKind": ["work", "personal", "external"],
+  "tags": [
+    "index",
+    "knowledge-management",
+    "migration",
+    "firestore",
+    "github",
+    "git",
+    "claude-code",
+    "notion",
+    "slack",
+    "api-compatibility",
+    "design",
+    "agent-skills",
+    "testing",
+    "code-review",
+    "tool-use",
+    "harness",
+    "identity-and-access",
+    "security"
+  ]
+}
