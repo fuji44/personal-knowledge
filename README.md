@@ -30,32 +30,35 @@ See [docs/concepts.md](docs/concepts.md) for how each stage works and how work/p
 
 ## Quick Start
 
-### Prerequisites
+The fastest way to try `personal-knowledge` locally (requires **Python 3.11+**, **[uv](https://docs.astral.sh/uv/)**, and **Claude Code**):
 
-- **Docker** (with Compose) or an existing `basic-memory` MCP server
-- **Python 3.11+** on the client machine for plugin hooks and utility scripts (verify with `python3 --version`; macOS system Python and Windows may require installing Python 3.11+ separately)
+1. Start the Basic Memory MCP server (default port `48000` avoids colliding with dev servers on `8000`):
 
-### 1. Start the Basic Memory MCP Container
+   ```bash
+   uvx --prerelease=allow basic-memory mcp --transport streamable-http --host 127.0.0.1 --port 48000
+   ```
 
-By default, the plugin connects to `http://localhost:48000/mcp` (avoiding port `8000`, which often collides with local development servers).
+2. Clone this repository and launch Claude Code with the plugin:
 
-```bash
-docker compose up -d
-```
+   ```bash
+   git clone https://github.com/fuji44/personal-knowledge.git
+   claude --plugin-dir ./personal-knowledge/plugins/personal-knowledge
+   ```
 
-This builds from [Dockerfile](Dockerfile) and binds port `48000` on `127.0.0.1` to the container's MCP port.
+Then ask: *"List available Basic Memory projects."*
 
-### 2. Install the Agent Plugin
-
-- **Antigravity (App / IDE / CLI)**: Copy or symlink [plugins/personal-knowledge](plugins/personal-knowledge) into `~/.gemini/config/plugins/personal-knowledge`.
-- **Claude Code**: Add this repository via [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json) or install from [plugins/personal-knowledge](plugins/personal-knowledge).
+For a full step-by-step setup (Docker Compose, first project creation), see [docs/setup.md](docs/setup.md). For other server runtimes, AI clients, or secure remote access via Cloudflare, see the guides below.
 
 ## Documentation
 
 | Document | Contents |
 | --- | --- |
+| [docs/setup.md](docs/setup.md) | Step-by-step setup guide (Docker Compose + Claude Code) |
+| [docs/guides/server.md](docs/guides/server.md) | Running Basic Memory (`uvx`, `uv tool`, `docker compose`, `docker run`) |
+| [docs/guides/clients.md](docs/guides/clients.md) | Client setup & support matrix (Terminal / Desktop / Web across Anthropic, Google, OpenAI) |
+| [docs/guides/cloudflare-remote.md](docs/guides/cloudflare-remote.md) | Local host + Cloudflare Tunnel & Access (Managed OAuth) for remote access |
 | [docs/concepts.md](docs/concepts.md) | Knowledge lifecycle, scope separation, tools, and references |
-| [docs/configuration.md](docs/configuration.md) | Verified environments, client support matrix, custom/remote endpoints, and customization |
+| [docs/configuration.md](docs/configuration.md) | Custom endpoints (`build-local-plugin.sh`), vocabulary, and hook customization |
 | [docs/operations.md](docs/operations.md) | Backup, integrity verification, and restore workflows |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Development workflow, MCP config synchronization, and unit tests |
 | [SECURITY.md](SECURITY.md) | Security policy, vulnerability reporting, and operational guidelines |
