@@ -1,6 +1,6 @@
 {
   "name": "personal-knowledge",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Personal knowledge management for AI agents over Basic Memory MCP, with project-scoped rules, lifecycle skills, and frontmatter guard hooks.",
   "author": {
     "name": "fuji44",
