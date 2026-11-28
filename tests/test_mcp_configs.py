@@ -4,7 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_ROOT = REPO_ROOT / "plugins" / "personal-knowledge"
-CONFIG_FILES = ("mcp_config.json", "mcp.json", ".mcp.json")
+CONFIG_FILES = ("mcp_config.json", "mcp.json", ".claude-plugin/plugin.json")
 
 
 def _load_servers(filename: str) -> dict:
@@ -33,15 +33,39 @@ class McpConfigsConsistencyTest(unittest.TestCase):
 
     def test_server_urls_match_across_configs(self):
         loaded = {name: _load_servers(name) for name in CONFIG_FILES}
+        claude_manifest = json.loads((PLUGIN_ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        user_config = claude_manifest.get("userConfig")
+        self.assertIsInstance(user_config, dict)
+        url_cfg = user_config.get("basic_memory_mcp_url")
+        self.assertIsInstance(url_cfg, dict)
+        self.assertEqual(url_cfg.get("type"), "string")
+        self.assertTrue(url_cfg.get("required"))
+
         for server_name in loaded["mcp_config.json"]:
-            urls = {
-                name: _extract_url(name, servers[server_name])
-                for name, servers in loaded.items()
-            }
-            unique_urls = set(urls.values())
-            self.assertEqual(len(unique_urls), 1, f"URL mismatch for {server_name}: {urls}")
-            url = next(iter(unique_urls))
-            self.assertEqual(url, "http://localhost:48000/mcp", f"Expected localhost default URL, got {url}")
+            mcp_json_url = _extract_url("mcp.json", loaded["mcp.json"][server_name])
+            self.assertEqual(
+                mcp_json_url,
+                "http://localhost:48000/mcp",
+                f"Expected localhost default URL in mcp.json, got {mcp_json_url}",
+            )
+
+            claude_entry = loaded[".claude-plugin/plugin.json"][server_name]
+            self.assertEqual(claude_entry.get("url"), "${user_config.basic_memory_mcp_url}")
+
+            ag_entry = loaded["mcp_config.json"][server_name]
+            self.assertEqual(ag_entry.get("url"), "${BASIC_MEMORY_MCP_URL}")
+            variables = ag_entry.get("variables")
+            self.assertIsInstance(variables, list)
+            self.assertTrue(
+                any(
+                    isinstance(v, dict)
+                    and v.get("name") == "BASIC_MEMORY_MCP_URL"
+                    and isinstance(v.get("title"), str)
+                    and isinstance(v.get("description"), str)
+                    for v in variables
+                ),
+                f"mcp_config.json[{server_name}] must declare BASIC_MEMORY_MCP_URL variable",
+            )
 
     def test_config_schemas_match_client_expectations(self):
         mcp_json = _load_servers("mcp.json")
@@ -49,27 +73,27 @@ class McpConfigsConsistencyTest(unittest.TestCase):
             self.assertEqual(entry.get("type"), "streamable-http", f"mcp.json[{server_name}]")
             self.assertIsInstance(entry.get("url"), str)
 
-        claude_mcp = _load_servers(".mcp.json")
+        claude_mcp = _load_servers(".claude-plugin/plugin.json")
         for server_name, entry in claude_mcp.items():
-            self.assertEqual(entry.get("type"), "http", f".mcp.json[{server_name}]")
+            self.assertEqual(entry.get("type"), "http", f".claude-plugin/plugin.json[{server_name}]")
             self.assertIsInstance(entry.get("url"), str)
 
         antigravity_mcp = _load_servers("mcp_config.json")
         for server_name, entry in antigravity_mcp.items():
             self.assertIsInstance(
-                entry.get("serverUrl"),
+                entry.get("url"),
                 str,
-                f"mcp_config.json[{server_name}] must use serverUrl without npx",
+                f"mcp_config.json[{server_name}] must use url without npx",
             )
             self.assertNotIn("command", entry, f"mcp_config.json[{server_name}] must not depend on command/npx")
 
     def test_skill_mentions_matching_endpoint_url(self):
-        servers = _load_servers("mcp_config.json")
+        servers = _load_servers("mcp.json")
         skill_text = (PLUGIN_ROOT / "skills" / "personal-knowledge" / "SKILL.md").read_text(
             encoding="utf-8"
         )
         for server_name, entry in servers.items():
-            url = _extract_url("mcp_config.json", entry)
+            url = _extract_url("mcp.json", entry)
             self.assertIn(url, skill_text, f"SKILL.md does not mention {server_name} URL {url}")
 
     def test_plugin_versions_match(self):

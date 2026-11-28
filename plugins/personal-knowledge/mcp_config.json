@@ -1,7 +1,15 @@
 {
   "mcpServers": {
     "basic-memory": {
-      "serverUrl": "http://localhost:48000/mcp"
+      "url": "${BASIC_MEMORY_MCP_URL}",
+      "variables": [
+        {
+          "name": "BASIC_MEMORY_MCP_URL",
+          "title": "Basic Memory MCP server URL",
+          "description": "Full Streamable HTTP endpoint URL for your Basic Memory MCP server (e.g., http://localhost:48000/mcp for local use, or https://bm.example.com/mcp for a remote instance).",
+          "link": "https://github.com/fuji44/personal-knowledge/blob/main/docs/guides/server.md"
+        }
+      ]
     }
   }
 }
