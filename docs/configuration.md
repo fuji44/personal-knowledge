@@ -1,13 +1,6 @@
-# Configuration & Client Support
+# Configuration
 
-## Verified Environments & Client Support
-
-| Client | MCP Tools | Lifecycle Hooks (`PreToolUse` / `PostToolUse` / `Stop`) | Status |
-| --- | --- | --- | --- |
-| **Claude Code** (CLI / VS Code) | Yes | Yes | Verified on Linux / WSL2 |
-| **Antigravity** (App / IDE / CLI) | Yes | Yes (`PreToolUse` & `Stop`) | Verified on Linux / WSL2 |
-| **Claude Desktop** (Code tab) | Yes | Yes (shares Claude Code engine) | Supported (not directly verified) |
-| **Claude Desktop** (Chat tab) / Web clients (`claude.ai`, Gemini Web, ChatGPT) | Yes (remote endpoint) | No (MCP connection only) | MCP only |
+For supported AI clients and client-specific installation steps, see [Client Setup](./guides/clients.md).
 
 ## Remote or Custom Endpoint
 
@@ -20,7 +13,7 @@ Antigravity's `mcp_config.json` does not expand environment variables in endpoin
 You can also supply the endpoint via `BASIC_MEMORY_MCP_URL` (run `./scripts/build-local-plugin.sh --help` for full usage).
 
 > [!IMPORTANT]
-> If you expose `basic-memory` beyond `127.0.0.1`, place it behind an authenticating reverse proxy or Zero Trust Access layer (see [SECURITY.md](../SECURITY.md)).
+> If you expose `basic-memory` beyond `127.0.0.1`, place it behind an authenticating reverse proxy or Zero Trust Access layer (see [SECURITY.md](../SECURITY.md)). For a complete walkthrough using Cloudflare Tunnel and Cloudflare Access (Managed OAuth), see [Local Host + Cloudflare](./guides/cloudflare-remote.md).
 
 ## Customization
 
