@@ -74,10 +74,12 @@ def rewrite_url(filename: str, key: str) -> None:
     path = dest / filename
     data = json.loads(path.read_text(encoding="utf-8"))
     for name, entry in data.get("mcpServers", {}).items():
-        if key == "serverUrl":
-            data["mcpServers"][name] = {"serverUrl": mcp_url}
+        if filename == "mcp_config.json":
+            data["mcpServers"][name] = {"url": mcp_url}
         else:
             entry[key] = mcp_url
+    if filename == ".claude-plugin/plugin.json":
+        data.pop("userConfig", None)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
@@ -93,9 +95,9 @@ def append_local_version(filename: str) -> None:
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-rewrite_url("mcp_config.json", "serverUrl")
+rewrite_url("mcp_config.json", "url")
 rewrite_url("mcp.json", "url")
-rewrite_url(".mcp.json", "url")
+rewrite_url(".claude-plugin/plugin.json", "url")
 append_local_version("plugin.json")
 append_local_version(".claude-plugin/plugin.json")
 PY

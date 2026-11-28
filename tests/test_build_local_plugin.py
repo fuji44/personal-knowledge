@@ -23,13 +23,14 @@ class BuildLocalPluginTest(unittest.TestCase):
             self.assertEqual(res.returncode, 0, res.stderr)
 
             mcp_config = json.loads((out_dir / "mcp_config.json").read_text(encoding="utf-8"))
-            self.assertEqual(mcp_config["mcpServers"]["basic-memory"], {"serverUrl": target_url})
+            self.assertEqual(mcp_config["mcpServers"]["basic-memory"], {"url": target_url})
 
             mcp_json = json.loads((out_dir / "mcp.json").read_text(encoding="utf-8"))
             self.assertEqual(mcp_json["mcpServers"]["basic-memory"]["url"], target_url)
 
-            claude_mcp = json.loads((out_dir / ".mcp.json").read_text(encoding="utf-8"))
+            claude_mcp = json.loads((out_dir / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
             self.assertEqual(claude_mcp["mcpServers"]["basic-memory"]["url"], target_url)
+            self.assertNotIn("userConfig", claude_mcp)
 
             short_sha = subprocess.check_output(
                 ["git", "-C", str(REPO_ROOT), "rev-parse", "--short", "HEAD"],
@@ -64,11 +65,12 @@ class BuildLocalPluginTest(unittest.TestCase):
             self.assertEqual(res.returncode, 0, res.stderr)
 
             mcp_config = json.loads((out_dir / "mcp_config.json").read_text(encoding="utf-8"))
-            self.assertEqual(mcp_config["mcpServers"]["basic-memory"], {"serverUrl": target_url})
+            self.assertEqual(mcp_config["mcpServers"]["basic-memory"], {"url": target_url})
             mcp_json = json.loads((out_dir / "mcp.json").read_text(encoding="utf-8"))
             self.assertEqual(mcp_json["mcpServers"]["basic-memory"]["url"], target_url)
-            claude_mcp = json.loads((out_dir / ".mcp.json").read_text(encoding="utf-8"))
+            claude_mcp = json.loads((out_dir / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
             self.assertEqual(claude_mcp["mcpServers"]["basic-memory"]["url"], target_url)
+            self.assertNotIn("userConfig", claude_mcp)
 
     def test_rejects_invalid_url_and_source_dir_overwrite(self):
         with tempfile.TemporaryDirectory() as d:

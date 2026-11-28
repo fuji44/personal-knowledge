@@ -23,8 +23,8 @@ This document defines operational conventions for AI agents editing this reposit
 ## 2. Plugin Editing & Verification Principles
 
 1. **Why multiple MCP config files exist and keeping them synchronized:**
-   - [plugins/personal-knowledge/](plugins/personal-knowledge/) contains three MCP configuration files for different client expectations (Antigravity reads `mcp_config.json` only and does not recognize `mcp.json` alone, so they cannot be consolidated into one file):
-     - `mcp_config.json`: For Antigravity (App, IDE, CLI)
+   - [plugins/personal-knowledge/](plugins/personal-knowledge/) defines MCP servers in three places for different client expectations (Antigravity reads `mcp_config.json` only and does not recognize `mcp.json` alone, so they cannot be consolidated into one file):
+     - `mcp_config.json`: For Antigravity (App, CLI), using `${BASIC_MEMORY_MCP_URL}` via `variables`
      - `mcp.json`: For the Agent Plugins specification (`agent-plugins.org` schema)
-     - `.mcp.json`: For Claude Code plugins
-   - Whenever you change the endpoint URL or server name, keep all three files and related skills synchronized, and verify consistency by running `python3 -m unittest discover -s tests -v`.
+     - `.claude-plugin/plugin.json`: For Claude Code plugins, using `${user_config.basic_memory_mcp_url}` via `userConfig`
+   - Whenever you change the endpoint URL or server name, keep all three definitions and related skills synchronized, and verify consistency by running `python3 -m unittest discover -s tests -v`.

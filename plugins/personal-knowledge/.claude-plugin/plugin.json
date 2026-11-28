@@ -7,5 +7,18 @@
     "url": "https://github.com/fuji44/personal-knowledge"
   },
   "repository": "https://github.com/fuji44/personal-knowledge",
-  "mcpServers": "./.mcp.json"
+  "userConfig": {
+    "basic_memory_mcp_url": {
+      "type": "string",
+      "title": "Basic Memory MCP server URL",
+      "description": "Full Streamable HTTP endpoint URL for your Basic Memory MCP server (e.g., http://localhost:48000/mcp for local use, or https://bm.example.com/mcp for a remote instance).",
+      "required": true
+    }
+  },
+  "mcpServers": {
+    "basic-memory": {
+      "type": "http",
+      "url": "${user_config.basic_memory_mcp_url}"
+    }
+  }
 }
