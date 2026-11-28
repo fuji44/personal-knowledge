@@ -47,21 +47,11 @@ The fastest way to try `personal-knowledge` locally (requires **Python 3.11+**, 
 
 Then ask: *"List available Basic Memory projects."*
 
-For a full step-by-step setup (Docker Compose, first project creation), see [docs/setup.md](docs/setup.md). For other server runtimes, AI clients, or secure remote access via Cloudflare, see the guides below.
+## Next Steps
 
-## Documentation
-
-| Document | Contents |
-| --- | --- |
-| [docs/setup.md](docs/setup.md) | Step-by-step setup guide (Docker Compose + Claude Code) |
-| [docs/guides/server.md](docs/guides/server.md) | Running Basic Memory (`uvx`, `uv tool`, `docker compose`, `docker run`) |
-| [docs/guides/clients.md](docs/guides/clients.md) | Client setup & support matrix (Terminal / Desktop / Web across Anthropic, Google, OpenAI) |
-| [docs/guides/cloudflare-remote.md](docs/guides/cloudflare-remote.md) | Local host + Cloudflare Tunnel & Access (Managed OAuth) for remote access |
-| [docs/concepts.md](docs/concepts.md) | Knowledge lifecycle, scope separation, tools, and references |
-| [docs/configuration.md](docs/configuration.md) | Custom endpoints (`build-local-plugin.sh`), vocabulary, and hook customization |
-| [docs/operations.md](docs/operations.md) | Backup, integrity verification, and restore workflows |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Development workflow, MCP config synchronization, and unit tests |
-| [SECURITY.md](SECURITY.md) | Security policy, vulnerability reporting, and operational guidelines |
+- [Setup Guide](docs/setup.md) — Full step-by-step installation, alternative server runtimes, client setup, customization, and backups.
+- [Local Host + Cloudflare](docs/guides/cloudflare-remote.md) — Secure remote access for multiple devices or web clients.
+- [Concepts & References](docs/concepts.md) — Knowledge lifecycle and work/personal scope separation.
 
 ## License
 
