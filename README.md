@@ -1,6 +1,6 @@
 # Personal Knowledge
 
-A personal knowledge management framework, Agent Plugin (for Antigravity and Claude Code), and containerized runtime built on top of [Basic Memory](https://github.com/basicmachines-co/basic-memory) over the Model Context Protocol (MCP) to accumulate and curate your own engineering knowledge across projects.
+A lightweight, low-maintenance personal knowledge base for AI agents built on [Basic Memory](https://github.com/basicmachines-co/basic-memory) over the Model Context Protocol (MCP) — plain Markdown with frontmatter, zero lock-in.
 
 ## Why This Exists
 
@@ -10,7 +10,12 @@ Built-in agent memories and uncurated Markdown folders tend to decay into stale,
 - **Work and personal contexts leak** when a single flat memory store mixes client-specific details with general engineering insights.
 - **Metadata drifts** without schema enforcement, breaking search filters and knowledge-graph traversal.
 
-`personal-knowledge` addresses this by separating raw session logs from distilled knowledge, enforcing a closed frontmatter vocabulary with lightweight hooks, and promoting recurring practices into version-controlled rules, skills, or lints.
+`personal-knowledge` solves this while staying intentionally simple:
+
+- **Low-maintenance**: Configure it once—AI agents capture, distill, and tidy insights as you work.
+- **Lightweight**: Minimal moving parts (Basic Memory MCP + Python standard-library hooks, no heavy platform).
+- **Zero lock-in**: Plain Markdown with frontmatter in clean folders—drop this project anytime and keep all your notes as-is.
+- **Context-isolated**: Separates work/client details from reusable personal engineering knowledge while enforcing a closed vocabulary.
 
 ## Knowledge Lifecycle
 
