@@ -72,3 +72,52 @@ jobs:
         run: |
           docker run --rm --entrypoint bash personal-knowledge:ci -c \
             'command -v bash python3 tar && basic-memory --help >/dev/null && python3 -c "import socket" && backup.sh --help && restore.sh --help && verify-backup.sh --help'
+
+      - name: Smoke test MCP server startup with fresh volume
+        run: |
+          set -euo pipefail
+          cleanup() {
+            docker rm -f basic-memory-ci >/dev/null 2>&1 || true
+            docker volume rm basic-memory-ci-data >/dev/null 2>&1 || true
+          }
+          trap cleanup EXIT
+          docker run -d \
+            --name basic-memory-ci \
+            --cap-drop ALL \
+            --security-opt no-new-privileges:true \
+            -p 127.0.0.1:48091:8000 \
+            -v basic-memory-ci-data:/data \
+            personal-knowledge:ci
+          python3 - <<'PY'
+          import json, time, urllib.request
+          url = "http://127.0.0.1:48091/mcp"
+          payload = json.dumps({
+              "jsonrpc": "2.0",
+              "id": 1,
+              "method": "initialize",
+              "params": {
+                  "protocolVersion": "2025-03-26",
+                  "capabilities": {},
+                  "clientInfo": {"name": "ci-smoke", "version": "0.1"},
+              },
+          }).encode()
+          last_err = None
+          for _ in range(60):
+              try:
+                  req = urllib.request.Request(
+                      url,
+                      data=payload,
+                      headers={
+                          "Content-Type": "application/json",
+                          "Accept": "application/json, text/event-stream",
+                      },
+                  )
+                  with urllib.request.urlopen(req, timeout=3) as resp:
+                      assert resp.status == 200, f"unexpected status: {resp.status}"
+                      print("MCP initialize OK:", resp.status)
+                      raise SystemExit(0)
+              except Exception as err:
+                  last_err = err
+                  time.sleep(0.5)
+          raise SystemExit(f"MCP server did not become ready: {last_err}")
+          PY
