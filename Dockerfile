@@ -7,6 +7,10 @@ LABEL org.opencontainers.image.title="personal-knowledge" \
 
 COPY --chmod=0755 scripts/backup.sh scripts/restore.sh scripts/verify-backup.sh /usr/local/bin/
 
+USER root
+RUN mkdir -p /data && chown appuser:appgroup /data
+USER appuser
+
 ENV HOME=/data \
     BASIC_MEMORY_HOME=/data
 
