@@ -60,7 +60,7 @@ With **Managed OAuth** enabled, unauthenticated requests to `https://bm.example.
 
 ## Step 4: Connect Your Clients
 
-Point your clients at `https://bm.example.com/mcp` using [Client Setup](./clients.md) (for Claude Code and Antigravity, use [build-local-plugin.sh](../../scripts/build-local-plugin.sh) to bake the remote URL into the plugin manifests).
+Point your clients at `https://bm.example.com/mcp` using [Client Setup](./clients.md) (both Claude Code and Antigravity let you specify the remote MCP server URL directly when installing or enabling the plugin).
 
 ## Step 5: Authenticate and Verify
 

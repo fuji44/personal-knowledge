@@ -40,17 +40,17 @@ docker compose ps
 
 ## Step 3: Install the Plugin in Claude Code
 
-Add this repository as a local marketplace and install the plugin:
+Install the plugin from GitHub and point it at your local Basic Memory server:
 
-```text
-/plugin marketplace add ./
-/plugin install personal-knowledge@personal-knowledge
+```bash
+claude plugin marketplace add fuji44/personal-knowledge
+claude plugin install personal-knowledge@personal-knowledge --config basic_memory_mcp_url=http://localhost:48000/mcp
 ```
 
-Restart or start a new Claude Code session so MCP tools and hooks are active.
+Start a new Claude Code session so MCP tools and hooks are active.
 
 > [!NOTE]
-> Using Antigravity, Codex, Desktop, or Web clients? See [Client Setup](./guides/clients.md).
+> Using Antigravity, Desktop, or Web clients? See [Client Setup](./guides/clients.md).
 
 ## Step 4: Verify Connection and Create Your First Project
 
@@ -68,7 +68,7 @@ Once that succeeds, you are ready to use the full lifecycle (`knowledge-capture`
 
 ## Troubleshooting
 
-- **Connection refused on `localhost:48000`**: Confirm the container is running (`docker compose ps`). If port `48000` is in use, set `HOST_PORT` and regenerate the plugin with `./scripts/build-local-plugin.sh "http://localhost:<PORT>/mcp"` (see [Configuration](./configuration.md)).
+- **Connection refused on `localhost:48000`**: Confirm the container is running (`docker compose ps`). If port `48000` is in use, set `HOST_PORT=<PORT>` when starting Compose and pass `--config basic_memory_mcp_url=http://localhost:<PORT>/mcp` when installing the plugin.
 - **Hook errors mentioning Python**: Ensure `python3 --version` reports `3.11` or newer on your `PATH`.
 - **Plugin changes not reflected**: Restart your client session after installing or updating the plugin.
 

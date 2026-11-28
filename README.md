@@ -43,14 +43,14 @@ The fastest way to try `personal-knowledge` locally (requires **Python 3.11+**, 
    uvx --prerelease=allow basic-memory mcp --transport streamable-http --host 127.0.0.1 --port 48000
    ```
 
-2. Clone this repository and launch Claude Code with the plugin:
+2. Install the plugin in Claude Code directly from GitHub:
 
    ```bash
-   git clone https://github.com/fuji44/personal-knowledge.git
-   claude --plugin-dir ./personal-knowledge/plugins/personal-knowledge
+   claude plugin marketplace add fuji44/personal-knowledge
+   claude plugin install personal-knowledge@personal-knowledge --config basic_memory_mcp_url=http://localhost:48000/mcp
    ```
 
-Then ask: *"List available Basic Memory projects."*
+Then launch `claude` and ask: *"List available Basic Memory projects."*
 
 ## Next Steps
 
